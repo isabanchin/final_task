@@ -1,0 +1,12 @@
+{% extends 'layout/default.html' %}
+
+{% block tittle %}
+{{ tittle }}
+{% endblock tittle %}
+
+{% block content %}
+{% for p in posts %}
+<h3>{{ p.user }}: {{ p.tittle }}</h3>
+{{ p.text }}<br><br>
+{% endfor %}
+{% endblock content %}
