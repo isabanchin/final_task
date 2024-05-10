@@ -1,0 +1,16 @@
+{% extends 'layout/base.html' %}
+{% block content %}
+<h1>Авторизация</h1>
+
+<form method='post'>
+    {% csrf_token %}
+    <input type="hidden" name="next" value="{{ next }}" />
+    <div style="color: red;">{{ form.non_field_errors }}</div>
+
+    {% for f in form %}
+    <p><label for="{{ f.id_for_label }}">{{f.label}}: </label>{{ f }}</p>
+    <div style="color: red;">{{ f.errors }}</div>
+    {% endfor %}
+    <button type="submit">Войти</button>
+</form>
+{% endblock %}

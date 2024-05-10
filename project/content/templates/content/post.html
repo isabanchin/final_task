@@ -1,11 +1,11 @@
-{% extends 'layout/default.html' %}
+{% extends 'layout/base.html' %}
 
-<!--  выводим в титул страницы надпись "Poster - <Название статьи>": -->
+
 {% block tittle %}
-Poster - {{ posts.tittle }}
+Poster - {{ post.tittle }}
 {% endblock tittle %}
 
 {% block content %}
-<h3>{{ post.user }}: {{ post.tittle }}</h3>
+<h3>{{ post.user }}: {{ post.title }}</h3>
 {{ post.text }}
 {% endblock content %}

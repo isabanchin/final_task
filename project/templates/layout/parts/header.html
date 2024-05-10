@@ -1,19 +1,26 @@
 <header>
         <ul class="nav col-12 col-lg-auto me-lg-auto mb-2 justify-content-center mb-md-0">
-                <li><a href="/content/" class="nav-link px-2 text-secondary">Home</a></li>
+                <li><a href="/" class="nav-link px-2 text-secondary">Home</a></li>
                 <li><a href="#" class="nav-link px-2 text-white">Search</a></li>
-                <li><a href="/content/add/" class="nav-link px-2 text-white">Add Post</a></li>
+                <li><a href="/add/" class="nav-link px-2 text-white">Add Post</a></li>
                 <li><a href="#" class="nav-link px-2 text-white">FAQ</a></li>
                 <li><a href="#" class="nav-link px-2 text-white">User Page</a></li>
         </ul>
-        <div class="text-end">
-                <button type="button" class="btn btn-outline-light me-2"><a href="/accounts/login/"
+        <div style="display: flex; flex-direction: row;" class=" text-end">
+                {% if not user.is_authenticated %}
+                <button type="button" class="btn btn-outline-light me-2"><a href="/users/login/"
                                 class="nav-link px-2 text-white">Login</a></button>
-                <button type="button" class="btn btn-warning"><a href="http://127.0.0.1:8000/accounts/signup/"
+                <button type="button" class="btn btn-warning"><a href="#"
                                 class="nav-link px-2 text-white">Sign-up</a></button>
-                <button type="button" class="btn btn-outline-light me-2"><a href="/accounts/logout/"
+                {% endif %}
+                {% if user.is_authenticated %}
+                <p style="text-align: left;"> Hello, {{ user.username }}</p>
+                <button type="button" class="btn btn-outline-light me-2"><a href="/users/logout/"
                                 class="nav-link px-2 text-white">LogOut</a></button>
+                {% endif %}
+                {% if user.is_superuser %}
                 <button type="button" class="btn btn-outline-light me-2"><a href="/admin/"
                                 class="nav-link px-2 text-white">Admin Panel</a></button>
+                {% endif %}
         </div>
 </header>

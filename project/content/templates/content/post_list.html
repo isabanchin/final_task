@@ -1,12 +1,12 @@
-{% extends 'layout/default.html' %}
+{% extends 'layout/base.html' %}
 
 {% block tittle %}
-{{ tittle }}
+{{ title }}
 {% endblock tittle %}
 
 {% block content %}
 {% for p in posts %}
-<h3>{{ p.user }}: {{ p.tittle }}</h3>
+<h3>{{ p.user }}: <a href="{{ p.get_absolute_url }}">{{ p.title }}</a>, {{ request.user.is_authenticated }}</h3>
 {{ p.text }}<br><br>
 {% endfor %}
 {% endblock content %}
