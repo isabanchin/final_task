@@ -16,6 +16,7 @@ class Post(models.Model):
         tanners = 'Tn', 'Кожевники'
         potions_makers = 'PM', 'Зельевары'
         spell_masters = 'SM', 'Мастера заклинаний'
+
     category = models.CharField(max_length=15, choices=tuple(
         map(lambda x: (x[0], x[1]), Cat.choices)), default='Tk', verbose_name="Категория")
 
@@ -56,7 +57,8 @@ class Media(models.Model):
 
 
 class Comment(models.Model):
-    post = models.ForeignKey(Post, on_delete=models.CASCADE)
+    post = models.ForeignKey(
+        Post, on_delete=models.CASCADE, related_name='posts')
     user = models.ForeignKey(User, on_delete=models.CASCADE)
     acception = models.BooleanField(default=False, verbose_name='Принять')
     time = models.DateTimeField(auto_now_add=True)

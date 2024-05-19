@@ -2,10 +2,11 @@
 
 
 {% block tittle %}
-Poster - {{ post.tittle }}
+Post - {{ post.title }} : {{ post.get_category_display}}
 {% endblock tittle %}
 
 {% block content %}
-<h3>{{ post.user }}: {{ post.title }}</h3>
+<h3>{{ post.user }}: {{ post.title }} : {{ post.get_category_display}}</h3>
+
 {{ post.text }}
 {% endblock content %}

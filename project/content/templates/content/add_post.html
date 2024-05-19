@@ -1,0 +1,16 @@
+{% extends 'layout/base.html' %}
+
+
+{% block tittle %}
+Добавление поста
+{% endblock tittle %}
+
+{% block content %}
+<h3>{{ post.user }}: {{ post.title }} : {{ post.get_category_display}}</h3>
+<form method="post" enctype="multipart/form-data">
+    {% csrf_token %}
+    {{ form.as_p}}
+    {{ add_media_form }}
+    <button type="submit">Сохранить</button>
+</form>
+{% endblock content %}

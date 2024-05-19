@@ -1,1 +1,2 @@
-echo "project/venv" > .gitignore
+echo "venv/" > .gitignore
+git rm --cached venv/
