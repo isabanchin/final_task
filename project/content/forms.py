@@ -1,4 +1,5 @@
 from django import forms
+from django.forms import ModelForm
 from .models import Post, Media, Comment
 
 
@@ -11,42 +12,8 @@ class AddPostForm(forms.ModelForm):
             'content': forms.Textarea(attrs={'cols': 50, 'rows': 5}),
         }
 
+# Добавление поста:
 
-# class AddMediaForm(forms.ModelForm):
-#     class Meta:
-#         model = Media
-#         fields = ['file',]
-
-#         def __init__(self, *args, **kwargs):
-#             super(AddMediaForm, self).__init__(*args, **kwargs)
-#             self.fields['file'].widget.attrs['multiple'] = True
-
-# class MediaForm(forms.Form):
-#     file = forms.FileField(
-#         widget=forms.ClearableFileInput(attrs={'multiple': True}))
-
-
-# ----------------------------------------------------------------------
-# class AddMediaInput(forms.ClearableFileInput):
-#     allow_multiple_selected = True
-
-
-# class AddMediaFileField(forms.FileField):
-#     def __init__(self, *args, **kwargs):
-#         kwargs.setdefault("widget", AddMediaInput())
-#         super().__init__(*args, **kwargs)
-
-#     def clean(self, data, initial=None):
-#         single_file_clean = super().clean
-#         if isinstance(data, (list, tuple)):
-#             result = [single_file_clean(d, initial) for d in data]
-#         else:
-#             result = single_file_clean(data, initial)
-#         return result
-
-
-# class AddMediaForm(forms.Form):
-#     file_field = AddMediaFileField()
 
 class MultipleFileInput(forms.ClearableFileInput):
     allow_multiple_selected = True
@@ -68,3 +35,14 @@ class MultipleFileField(forms.FileField):
 
 class FileFieldForm(forms.Form):
     file_field = MultipleFileField(required=False)
+
+# Добавление комментария:
+
+
+class AddCommentForm(ModelForm):
+    text = forms.CharField(label='Оставить комментарий', widget=forms.Textarea(
+        attrs={'cols': 70, 'rows': 4}), required=True)
+
+    class Meta:
+        model = Comment
+        fields = ['text',]

@@ -59,7 +59,7 @@ class Media(models.Model):
 class Comment(models.Model):
     post = models.ForeignKey(
         Post, on_delete=models.CASCADE, related_name='posts')
-    user = models.ForeignKey(User, on_delete=models.CASCADE)
+    user = models.ForeignKey(User, blank=True, on_delete=models.CASCADE)
     acception = models.BooleanField(default=False, verbose_name='Принять')
     time = models.DateTimeField(auto_now_add=True)
-    text = models.TextField(verbose_name='Содержимое')
+    text = models.TextField(verbose_name='Комментарий')

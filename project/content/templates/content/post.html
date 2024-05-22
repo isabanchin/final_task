@@ -9,4 +9,20 @@ Post - {{ post.title }} : {{ post.get_category_display}}
 <h3>{{ post.user }}: {{ post.title }} : {{ post.get_category_display}}</h3>
 
 {{ post.text }}
+<hr>
+{% if comments %}
+<h3>Комментарии участников</h3>
+{% else %}
+<h5>У этого поста пока нет комментариев</h5>
+{% endif %}
+{% for comm in comments %}
+<h5>{{ comm.user__username }}:</h5>
+{{ comm.text }}
+<hr>
+{% endfor %}
+<form action="" , method="post">
+    {% csrf_token %}
+    {{ form }}
+    <button type="submit"> Отправить </button>
+</form>
 {% endblock content %}

@@ -36,3 +36,10 @@ print(Ct.labels)
 print(Ct.values)
 print(Ct.names)
 print(Ct(x).label)
+
+
+кусок:
+{% for comm in comments % }
+{{comm.user}}
+{{comm.text}}
+{% endfor % }
