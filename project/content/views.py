@@ -2,6 +2,7 @@
 # from typing import Any
 # from django.db.models.query import QuerySet
 from django.shortcuts import redirect, render
+from django.template.loader import render_to_string
 from django.urls import reverse, reverse_lazy
 from django.views.generic import ListView, DetailView, CreateView, UpdateView
 from django.contrib.auth.mixins import LoginRequiredMixin
@@ -9,6 +10,7 @@ from .models import Post, Media, Comment
 from .forms import AddPostForm, FileFieldForm, AddCommentForm, AcceptCommentForm
 from .filters import CommentFilter
 from itertools import chain
+from django.core.mail import EmailMultiAlternatives
 
 
 class PostList(ListView):
@@ -64,7 +66,22 @@ class PostView(LoginRequiredMixin, DetailView):
                 if instance.user == Post.objects.get(id=pk).user:
                     instance.acception = True
                 instance.save()    # сохраняем новый комментарий в БД
-                return redirect('/post/' + str(pk))
+                if instance.user != Post.objects.get(id=pk).user:
+                    # comment = Comment.objects.filter(id=pk)
+                    # формируем данные для уведомления и отправляем email:
+                    html_content = render_to_string('content/email_new_comment.html', {
+                        'comment': instance,
+                        'post_url': f'http://127.0.0.1:8000/{instance.post.get_absolute_url()}',
+                    })  # формируем строку html-шаблона письма
+                    msg = EmailMultiAlternatives(
+                        subject=f'Новый комментарий к Вашему посту "{instance.post}"',
+                        body=f'К Вашему посту "{instance.post}" добавлен новый комментарий автора {instance.user}: "{instance.text}"',
+                        from_email='sabanchini@yandex.ru',
+                        to=[instance.post.user.email]
+                    )
+                    msg.attach_alternative(
+                        html_content, "text/html")  # добавляем html
+                    msg.send()  # отсылаем
         return redirect('/post/' + str(pk))
 
 
@@ -127,7 +144,25 @@ class CommView(LoginRequiredMixin, DetailView):
 # обработка формы "acception"
         if self.request.POST.get('acception'):
             if self.request.POST.get('acception') == 'accept':
-                instance = Comment.objects.filter(id=pk).update(acception=True)
+                instance = Comment.objects.filter(
+                    id=pk).update(acception=False)
+                comment = Comment.objects.get(id=pk)
+                print('comment.post.get_absolute_url() =',
+                      comment.post.get_absolute_url())
+                # формируем данные для уведомления и отправляем email:
+                html_content = render_to_string('content/email_comment_acception.html', {
+                    'comment': comment,
+                    'post_url': f'http://127.0.0.1:8000/{comment.post.get_absolute_url()}',
+                })  # формируем строку html-шаблона письма
+                msg = EmailMultiAlternatives(
+                    subject=f'Ваш комментарий к посту "{comment.post}" принят',
+                    body=f'Ваш комментарий к посту "{comment.post}" принят автором и доступен для просмотра другими пользователями: "{comment.text}"',
+                    from_email='sabanchini@yandex.ru',
+                    to=[comment.user.email]
+                )
+                msg.attach_alternative(
+                    html_content, "text/html")  # добавляем html
+                msg.send()  # отсылаем
                 return redirect('comment', pk)
             # фиксируем "удалить"
             elif self.request.POST.get('acception') == 'delete':

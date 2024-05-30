@@ -1,0 +1,17 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Acception</title>
+</head>
+
+<body>
+    <h2>Новый комментарий к Вашему посту "{{ comment.post }}"</h2>
+    <p> К Вашему посту <a href={{ post_url }}>"{{ comment.post}}"</a> добавлен новый комментарий автора
+        {{ comment.user }} :</p>
+    <p>"{{ comment.text }}"</p>
+</body>
+
+</html>
