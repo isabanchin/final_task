@@ -7,12 +7,10 @@
 {% block content %}
 {% for p in posts %}
 <h5 style="margin: 30px 30px 5px 50px; padding: 5px 10px; background-color: rgb(189, 191, 189);">
-    Категория: {{ p.get_category_display }} | <a href="{{ p.get_absolute_url }}">
-        {{p.title}}</a> |
-    Автор:
-    {{ p.user }} | Дата:
-    {{p.time|date:"d.m.Y" }}
-    {{request.user.is_authenticated }}</h5>
-{{ p.text }}<br><br>
+    Статья <a href="{{ p.get_absolute_url }}">
+        "{{p.title}}"</a> автора {{ p.user }}.
+    Категория: {{ p.get_category_display }} | Дата:{{p.time|date:"d.m.Y" }}
+</h5>
+{{ p.text|truncatechars:150 }}<br><br>
 {% endfor %}
 {% endblock content %}

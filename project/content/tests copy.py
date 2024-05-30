@@ -39,7 +39,24 @@ print(Ct(x).label)
 
 
 кусок:
-{% for comm in comments % }
-{{comm.user}}
-{{comm.text}}
-{% endfor % }
+<form >
+        <input type = "radio" id = "html" name = "fav_language" value = "HTML" >
+        <label for = "html" > HTML < /label > <br >
+        <input type = "radio" id = "css" name = "fav_language" value = "CSS" >
+        <label for = "css" > CSS < /label > <br >
+        <input type = "radio" id = "javascript" name = "fav_language" value = "JavaScript" >
+        <label for = "javascript" > JavaScript < /label >
+</form >
+
+
+if self.request.user == Post.objects.get(id=self.kwargs['pk']).user:
+    print(self.request.user, Post.objects.get(
+        id=self.kwargs['pk']).user)
+else:
+    return redirect('home')
+
+    form = AddPostForm(request.POST)
+    cd = Post(form.cleaned_data)
+    post = Post.objects.get(id=pk)
+    post.objects.update(
+        title=cd.title, text=cd.text, category=cd.category)

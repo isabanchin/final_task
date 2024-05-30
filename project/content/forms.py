@@ -34,7 +34,7 @@ class MultipleFileField(forms.FileField):
 
 
 class FileFieldForm(forms.Form):
-    file_field = MultipleFileField(required=False)
+    file_field = MultipleFileField(required=False)        #
 
 # Добавление комментария:
 
@@ -46,3 +46,11 @@ class AddCommentForm(ModelForm):
     class Meta:
         model = Comment
         fields = ['text',]
+
+
+class AcceptCommentForm():
+    acception = forms.BooleanField(label='Принять комментарий')
+
+    class Meta:
+        model = Comment
+        fields = ['acception',]

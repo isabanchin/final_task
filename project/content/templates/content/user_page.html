@@ -1,0 +1,26 @@
+{% extends 'layout/base.html' %}
+
+{% block tittle %}
+{{ title }}
+{% endblock tittle %}
+
+{% block content %}
+{% if comments %}
+<form method="GET">
+    {{ filter.form }}
+    <input class="btn btn-primary" type="submit" value="Найти">
+</form>
+{% endif %}
+{% for comm in filter.qs %}
+
+<h6 style="margin: 30px 30px 5px 50px; padding: 5px 10px; background-color: rgb(189, 191, 189);">
+    Статья автора {{ comm.post.user }}: <a href="/{{ comm.post.get_absolute_url }}">{{ comm.post.title }}</a> |
+    Категория:
+    {{ comm.post.get_category_display }} | Дата:
+    {{comm.time|date:"d.m.Y - H:m" }}</h6>
+Комментарий автора {{ comm.user }}: <a href="/{{ comm.get_absolute_url }}">{{ comm.text }}</a>
+{% if not comm.acception %}
+<p style="color:darkred">Требуется утверждение комментария</p>
+{% endif %}
+{% endfor %}
+{% endblock content %}
