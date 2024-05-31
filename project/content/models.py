@@ -32,7 +32,8 @@ class Post(models.Model):
 
 
 class Media(models.Model):
-    post = models.ForeignKey(Post, on_delete=models.CASCADE)
+    post = models.ForeignKey(
+        Post, on_delete=models.CASCADE, related_name='files')
     # image = models.ImageField(
     #     upload_to='images', default=None, blank=True, verbose_name='Изображения')
     file = models.FileField(

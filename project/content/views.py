@@ -22,8 +22,12 @@ class PostList(ListView):
         'title': 'Главная страница'
     }
 
+    def get_query(self):
+        return Post.objects.all().select_related('files')
 
 # LoginRequiredMixin - вход только для зарегеннных в учебных целях:
+
+
 class PostView(LoginRequiredMixin, DetailView):
     model = Post
     comm_form = AddCommentForm()                                #

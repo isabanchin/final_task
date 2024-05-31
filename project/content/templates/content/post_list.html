@@ -11,6 +11,14 @@
         "{{p.title}}"</a> автора {{ p.user }}.
     Категория: {{ p.get_category_display }} | Дата:{{p.time|date:"d.m.Y" }}
 </h5>
-{{ p.text|truncatechars:150 }}<br><br>
+<div style="height: 150px">
+    {% for f in p.files.all %}
+    {% if f.file_type == "img" %}
+    <a href="{{f.file.url}}" target="_blank"><img src="{{f.file.url}}"
+            style="float: left; width: 150px; height: 150px; object-fit: cover; margin: 0px 10px"></a>
+    {% endif %}
+    {% endfor %}
+    {{ p.text|truncatechars:150 }}
+</div>
 {% endfor %}
 {% endblock content %}

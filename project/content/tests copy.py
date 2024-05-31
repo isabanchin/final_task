@@ -40,12 +40,12 @@ print(Ct(x).label)
 
 кусок:
 <form >
-        <input type = "radio" id = "html" name = "fav_language" value = "HTML" >
-        <label for = "html" > HTML < /label > <br >
-        <input type = "radio" id = "css" name = "fav_language" value = "CSS" >
-        <label for = "css" > CSS < /label > <br >
-        <input type = "radio" id = "javascript" name = "fav_language" value = "JavaScript" >
-        <label for = "javascript" > JavaScript < /label >
+                <input type = "radio" id = "html" name = "fav_language" value = "HTML" >
+                <label for = "html" > HTML < /label > <br >
+                <input type = "radio" id = "css" name = "fav_language" value = "CSS" >
+                <label for = "css" > CSS < /label > <br >
+                <input type = "radio" id = "javascript" name = "fav_language" value = "JavaScript" >
+                <label for = "javascript" > JavaScript < /label >
 </form >
 
 
@@ -60,3 +60,7 @@ else:
     post = Post.objects.get(id=pk)
     post.objects.update(
         title=cd.title, text=cd.text, category=cd.category)
+
+{% if {{ f.file_type }} == "img" % }
+<img src = {{f.file}} style = "width: 150px; height: 150px; object-fit: cover; margin: 0px 10px" >
+{% endif % }
