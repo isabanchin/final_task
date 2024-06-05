@@ -6,62 +6,77 @@ Post - {{ post.title }} : {{ post.get_category_display}}
 {% endblock tittle %}
 
 {% block content %}
-{% if user == post.user %}
-<div style="display: flex; justify-content: center; align-items: center;">
-    <form method="post">
-        {% csrf_token %}
-        <button name="post_edit" value="yes">Редактировать пост</button>
-    </form>
-</div>
-{% endif %}
-<h3>Статья {{ post.title }} автора {{ post.user }}. Категория {{ post.get_category_display}}</h3>
-{{ post.text }}
-<hr>
-<p>Загруженные изображения:</p>
-<div style="display: flex; flex-wrap: wrap">
-    {% for image in image_objects %}
-    <div>
-        <img src="{{ image.file.url }}" style="width: 150px; height: 150px; object-fit: cover; margin: 0px 10px">
+<div class="container bg-secondary text-white">
+    <br>
+    <br>
+    {% if user == post.user %}
+    <div style="display: flex; justify-content: center; align-items: center;">
+        <form method="post">
+            {% csrf_token %}
+            <button class="btn btn-sm btn-warning" name="post_edit" value="yes">Редактировать
+                пост</button>
+        </form>
     </div>
-    {% endfor %}
-</div>
-<br>
-<p>Загруженное видео:</p>
-<div style="display: flex; flex-wrap: wrap">
-    {% for video in video_objects %}
-    <div>
-        <video style="width: 150px; height: 150px; object-fit: cover; margin: 0px 10px" controls>
-            <source src="{{ video.file.url }}" type="video/mp4" />
-        </video>
+    <br>
+    {% endif %}
+    <div class="text-center bg-dark">
+        <h3>{{ post.title }}</h3>
+        <h6> Автор {{ post.user }}. Категория {{ post.get_category_display}}</h6>
     </div>
-    {% endfor %}
-</div>
-<p>Загруженные файлы:</p>
-<div style="display: flex; flex-wrap: wrap">
-    {% for file in file_objects %}
-    <div style="width: 170px; margin: 0px 10px">
-        <a href="{{ file.file.url }}">{{ file.file.name }}</a><br>
+    {{ post.text }}
+    <hr>
+    <p>Загруженные изображения:</p>
+    <div style="display: flex; flex-wrap: wrap">
+        {% for image in image_objects %}
+        <div>
+            <a href="{{image.file.url}}" target="_blank"><img src="{{ image.file.url }}"
+                    style="width: 150px; height: 150px; object-fit: cover; margin: 0px 10px"></a>
+        </div>
+        {% endfor %}
+    </div>
+    <br>
+    <p>Загруженное видео:</p>
+    <div style="display: flex; flex-wrap: wrap">
+        {% for video in video_objects %}
+        <div>
+            <video style="width: 150px; height: 150px; object-fit: cover; margin: 0px 10px" controls>
+                <source src="{{ video.file.url }}" type="video/mp4" />
+            </video>
+        </div>
+        {% endfor %}
+    </div>
+    <p>Загруженные файлы:</p>
+    <div style="display: flex; flex-wrap: wrap">
+        {% for file in file_objects %}
+        <div style="width: 170px; margin: 0px 10px">
+            <a href="{{ file.file.url }}">{{ file.file.name }}</a><br>
+        </div>
+        <hr>
+        {% endfor %}
     </div>
     <hr>
+    {% if comments %}
+    <h3>Комментарии участников</h3>
+    {% else %}
+    <h5>У этого поста пока нет комментариев</h5>
+    {% endif %}
+    {% for comm in comments %}
+    <h5>{{ comm.user__username }}:</h5>
+    {{ comm.text }}
+    {% if not comm.acception %}
+    <p style="color: darkred;">(этот комментарий пока не принят автором и недоступен другим пользователям)</p>
+    {% endif %}
+    <hr>
     {% endfor %}
+
+    <form class="fd-flex align-items-center" action="" , method="post">
+        {% csrf_token %}
+        {{ comm_form }}
+        <div class="d-flex justify-content-center align-items-center">
+            <button class="btn btn-sm btn-warning" style="margin: 20px 0px;" type="submit"> Отправить
+                комментарий</button>
+        </div>
+    </form>
+
 </div>
-<hr>
-{% if comments %}
-<h3>Комментарии участников</h3>
-{% else %}
-<h5>У этого поста пока нет комментариев</h5>
-{% endif %}
-{% for comm in comments %}
-<h5>{{ comm.user__username }}:</h5>
-{{ comm.text }}
-{% if not comm.acception %}
-<p style="color: darkred;">(этот комментарий пока не принят автором и недоступен другим пользователям)</p>
-{% endif %}
-<hr>
-{% endfor %}
-<form action="" , method="post">
-    {% csrf_token %}
-    {{ comm_form }}
-    <button type="submit"> Отправить </button>
-</form>
 {% endblock content %}

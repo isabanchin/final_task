@@ -40,12 +40,12 @@ print(Ct(x).label)
 
 кусок:
 <form >
-                <input type = "radio" id = "html" name = "fav_language" value = "HTML" >
-                <label for = "html" > HTML < /label > <br >
-                <input type = "radio" id = "css" name = "fav_language" value = "CSS" >
-                <label for = "css" > CSS < /label > <br >
-                <input type = "radio" id = "javascript" name = "fav_language" value = "JavaScript" >
-                <label for = "javascript" > JavaScript < /label >
+                                <input type = "radio" id = "html" name = "fav_language" value = "HTML" >
+                                <label for = "html" > HTML < /label > <br >
+                                <input type = "radio" id = "css" name = "fav_language" value = "CSS" >
+                                <label for = "css" > CSS < /label > <br >
+                                <input type = "radio" id = "javascript" name = "fav_language" value = "JavaScript" >
+                                <label for = "javascript" > JavaScript < /label >
 </form >
 
 
@@ -64,3 +64,6 @@ else:
 {% if {{ f.file_type }} == "img" % }
 <img src = {{f.file}} style = "width: 150px; height: 150px; object-fit: cover; margin: 0px 10px" >
 {% endif % }
+
+<input type = "text" id = "comm_edit" name = "comm_edit" value = {{comment.text}} > <br >
+<label for = "comm_edit" > Комментарий < /label > <br >

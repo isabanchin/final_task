@@ -6,54 +6,60 @@
 {% endblock tittle %}
 
 {% block content %}
-<h3>{{ post.user }}: {{ post.title }} : {{ post.get_category_display}}</h3>
-<form method="post" enctype="multipart/form-data">
-    {% csrf_token %}
-    {{ form.as_p}}
-    {{ add_media_form.as_p }}
-    <button type="submit">Сохранить</button>
-</form>
-<hr>
-<p>Загруженные изображения:</p>
-<div style="display: flex; flex-wrap: wrap">
-    {% for image in image_objects %}
-    <div>
-        <img src="{{ image.file.url }}" style="width: 150px; height: 150px; object-fit: cover; margin: 0px 10px">
-        <form method="post">
-            {% csrf_token %}
-            <button style="margin: 0px 20px; width: 130px;" type="submit" name="del_file"
-                value="{{ image.file }}">Удалить файл</button>
-        </form>
-    </div>
-    {% endfor %}
-</div>
-<br>
-<p>Загруженное видео:</p>
-<div style="display: flex; flex-wrap: wrap">
-    {% for video in video_objects %}
-    <div>
-        <video style="width: 150px; height: 150px; object-fit: cover; margin: 0px 10px" controls>
-            <source src="{{ video.file.url }}" type="video/mp4" />
-        </video>
-        <form method="post">
-            {% csrf_token %}
-            <button style="margin: 0px 20px; width: 130px;" type="submit" name="del_file"
-                value="{{ video.file }}">Удалить файл</button>
-        </form>
-    </div>
-    {% endfor %}
-</div>
-<p>Загруженные файлы:</p>
-<div style="display: flex; flex-wrap: wrap">
-    {% for file in file_objects %}
-    <div style="width: 170px; margin: 0px 10px">
-        {{ file.file }}<br>
-        <form method="post">
-            {% csrf_token %}
-            <button type="submit" name="del_file" value="{{ file.file }}">Удалить файл</button>
-        </form>
-    </div>
+<div class="container bg-secondary text-white">
+    <br>
+    <br>
+    {% if post.user %}
+    <h3>{{ post.user }}: {{ post.title }} : {{ post.get_category_display}}</h3>
+    {% endif %}
+    <form method="post" enctype="multipart/form-data">
+        {% csrf_token %}
+        {{ form.as_p}}
+        {{ add_media_form.as_p }}
+        <button type="submit">Сохранить</button>
+    </form>
     <hr>
-    {% endfor %}
+    <p>Загруженные изображения:</p>
+    <div style="display: flex; flex-wrap: wrap">
+        {% for image in image_objects %}
+        <div>
+            <img src="{{ image.file.url }}" style="width: 150px; height: 150px; object-fit: cover; margin: 0px 10px">
+            <form method="post">
+                {% csrf_token %}
+                <button style="margin: 0px 20px; width: 130px;" type="submit" name="del_file"
+                    value="{{ image.file }}">Удалить файл</button>
+            </form>
+        </div>
+        {% endfor %}
+    </div>
+    <br>
+    <p>Загруженное видео:</p>
+    <div style="display: flex; flex-wrap: wrap">
+        {% for video in video_objects %}
+        <div>
+            <video style="width: 150px; height: 150px; object-fit: cover; margin: 0px 10px" controls>
+                <source src="{{ video.file.url }}" type="video/mp4" />
+            </video>
+            <form method="post">
+                {% csrf_token %}
+                <button style="margin: 0px 20px; width: 130px;" type="submit" name="del_file"
+                    value="{{ video.file }}">Удалить файл</button>
+            </form>
+        </div>
+        {% endfor %}
+    </div>
+    <p>Загруженные файлы:</p>
+    <div style="display: flex; flex-wrap: wrap">
+        {% for file in file_objects %}
+        <div style="width: 170px; margin: 0px 10px">
+            {{ file.file }}<br>
+            <form method="post">
+                {% csrf_token %}
+                <button type="submit" name="del_file" value="{{ file.file }}">Удалить файл</button>
+            </form>
+        </div>
+        <hr>
+        {% endfor %}
+    </div>
 </div>
 {% endblock content %}

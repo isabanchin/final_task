@@ -1,27 +1,31 @@
-<header>
-        <div style="display: flex; flex-direction: row">
-                <ul class="nav col-12 col-lg-auto me-lg-auto mb-2 justify-content-center mb-md-0">
-                        <li><a href="/" class="nav-link px-2 text-secondary">Home</a></li>
-                        <li><a href="/post/add/" class="nav-link px-2 text-white">Add Post</a></li>
-                        <li><a href="/user/" class="nav-link px-2 text-white">User Page</a></li>
-                        <li><a href="#" class="nav-link px-2 text-white">FAQ</a></li>
-                </ul>
-                <div style="display: flex; flex-direction: row;" class=" text-end">
-                        {% if not user.is_authenticated %}
-                        <button type="button" class="btn btn-outline-light me-2"><a href="/users/login/"
-                                        class="nav-link px-2 text-white">Login</a></button>
-                        <button type="button" class="btn btn-warning"><a href="{% url 'users:register' %}"
-                                        class="nav-link px-2 text-white">Sign-up</a></button>
-                        {% endif %}
-                        {% if user.is_authenticated %}
-                        <p style="text-align: left;"> Hello, {{ user.username }}</p>
-                        <button type="button" class="btn btn-outline-light me-2"><a href="/users/logout/"
-                                        class="nav-link px-2 text-white">LogOut</a></button>
-                        {% endif %}
-                        {% if user.is_superuser %}
-                        <button type="button" class="btn btn-outline-light me-2"><a href="/admin/"
-                                        class="nav-link px-2 text-white">Admin Panel</a></button>
-                        {% endif %}
-                </div>
-        </div>
+<header class="fixed-top navbar-dark bg-dark">
+    <div class="navbar-fixed-top">
+        <ul class="nav col-sm-12 text-center">
+            <li class="col-sm"><a href="/" class="nav-link px-2 text-secondary">Home</a></li>
+            <li class="col-sm"><a href="/post/add/" class="nav-link px-2 text-white">Add Post</a></li>
+            <li class="col-sm"><a href="/user/" class="nav-link px-2 text-white">User Page</a></li>
+            <li class="col-sm"><a href="#" class="nav-link px-2 text-white">FAQ</a></li>
+            <li class="col-sm"></li>
+            <li class="col-sm"></li>
+            <li class="col-sm"></li>
+            {% if not user.is_authenticated %}
+            <li class="col-sm"><button type="button" class="btn btn-sm btn-outline-secondary me-2"><a
+                        href="/accounts/login/" class="nav-link px-2 text-white">Login</a></button></li>
+            <li class="col-sm"><button type="button" class="btn btn-sm btn-warning"><a href="/accounts/signup/"
+                        class="nav-link px-2 text-white">Sign-up</a></button></li>
+            {% endif %}
+            {% if user.is_authenticated %}
+            <li class="col-sm">
+                <p class="nav-link px-2 text-white"> Hello, {{ user.username }}</p>
+            </li>
+            <li class="col-sm"><button type="button" class="btn btn-sm btn-outline-secondary me-2"><a
+                        href="/accounts/logout/" class="nav-link px-2 text-white">LogOut</a></button></li>
+            {% endif %}
+            {% if user.is_superuser %}
+            <li class="col-sm"><button type="button" class="btn btn-sm btn-outline-secondary me-2"><a href="/admin/"
+                        class="nav-link px-2  text-white">Admin
+                        Panel</a></button></li>
+            {% endif %}
+        </ul>
+    </div>
 </header>

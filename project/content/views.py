@@ -140,7 +140,8 @@ class CommView(LoginRequiredMixin, DetailView):
     model = Comment
     template_name = 'content/comment.html'
     context_object_name = 'comment'
-    extra_context = {'del_confirmation': ""}
+    extra_context = {'del_confirmation': "",
+                     'edit': 'no'}
 
     def post(self, request, **kwargs):
         pk = kwargs['pk']
@@ -149,7 +150,7 @@ class CommView(LoginRequiredMixin, DetailView):
         if self.request.POST.get('acception'):
             if self.request.POST.get('acception') == 'accept':
                 instance = Comment.objects.filter(
-                    id=pk).update(acception=False)
+                    id=pk).update(acception=True)
                 comment = Comment.objects.get(id=pk)
                 print('comment.post.get_absolute_url() =',
                       comment.post.get_absolute_url())
@@ -188,8 +189,9 @@ class CommView(LoginRequiredMixin, DetailView):
             return redirect('comment', pk)
 # сохранение новой редакции комментария
         if self.request.POST.get('comm_edit'):
-            instance = Comment.objects.filter(id=pk).update(
-                text=self.request.POST.get('comm_edit'))
+            if self.request.user == Comment.objects.get(id=pk):
+                instance = Comment.objects.filter(id=pk).update(
+                    text=self.request.POST.get('comm_edit'))
             self.extra_context['edit'] = "no"
             return redirect('comment', pk)
 
@@ -244,43 +246,3 @@ class EditPostView(LoginRequiredMixin, UpdateView):
         else:
             return redirect('home')
         return redirect('edit_post', pk)
-
-    # def form_valid(self, form):
-    #     cd = form.cleaned_data
-    #     print('cd = ', cd)
-    #     pk = self.kwargs['pk']
-    #     # сохраняем форму только для юзера равного автору:
-    #     if self.request.user == Post.objects.get(id=pk).user:
-    #         # сохраняем форму поста
-    #         print('self.request.POST = ', dir(self.request.POST))
-    #         post_form = form.save(commit=False)
-    #         post_form.user = self.request.user
-    #         post_form.save()
-    #         # сохраняем файлы
-    #         files = self.request.FILES.getlist('file_field')
-    #         for f in files:
-    #             extension = f.name.split('.')[-1]
-    #             if extension in ['jpg', 'jpeg', 'bmp', 'png', 'gif']:
-    #                 Media.objects.create(
-    #                     file=f, post=post_form, file_type='img')
-    #             else:
-    #                 Media.objects.create(
-    #                     file=f, post=post_form, file_type='file')
-    #         # удаление файлов не срабатывает так как ничто не инициирует валидацию:
-    #         if self.request.POST.get('del_file'):
-    #             print('файлы к удалению', self.request.POST.get('del_file'))
-    #             print('условие уделения файлов')
-    #             instance = Media.objects.get(
-    #                 file=self.request.POST.get('del_file'))
-    #             instance.delete()
-    #             print('post-запрос')
-    #             return redirect('edit_post', pk)
-    #         return super().form_valid(form)
-    #     else:
-    #         return redirect('home')
-
-    # def get_success_url(self):
-    #     # pk = self.kwargs['pk']
-    #     # print('get_success_url')
-    #     return reverse('edit_post', kwargs={'pk': self.kwargs['pk']})
-    #     # return redirect('edit_post', pk)

@@ -14,25 +14,13 @@
         integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
 </head>
 
-<body style="margin:0px">
+<body class="container-fluid bg-dark text-white">
     <header>
-        <div style="width: 100vw; height: 7vh; background-color: #AAA">
-            {% include './parts/header.html' %}
-        </div>
+        {% include './parts/header.html' %}
     </header>
-    <aside>
-        <div style="display: inline-flex; height: 93vh">
-            <div style="background-color: #BBB; width: 12vw;">
-                {% include './parts/aside.html' %}
-            </div>
-            <div style="background-color: #CCC; width: 88vw; height: 93vh">
-                {% block content %}
-                {% endblock content %}
-            </div>
-        </div>
-    </aside>
-    <content>
-
+    <content class="container">
+        {% block content %}
+        {% endblock content %}
     </content>
 </body>
 

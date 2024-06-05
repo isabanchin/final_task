@@ -1,0 +1,18 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Weekly notification</title>
+</head>
+
+<body>
+    <h2>Еженедельная сводка фанатского сервера "MMORPG"</h2>
+    <p> Сводка объявлений опубликованных за неделю:</p>
+    {% for post in context_obj %}
+    <p>Объявление <a href="{{ post.url }}">" {{ post.title }} "</a>от {{ post.user }}</p>
+    {% endfor %}
+</body>
+
+</html>

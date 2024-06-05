@@ -6,45 +6,48 @@ Post - {{ comment.post.title }} : {{ comment.post.get_category_display}}
 {% endblock tittle %}
 
 {% block content %}
-<h4>Статья: {{ comment.post.title }}</h4>
-{{ comment.post.text }}
-<hr>
-<h5>Комментарий пользователя {{ comment.user }}:</h5>
-{% if edit == 'yes' %}
-<form method="post">
-    {% csrf_token %}
-    <input type="text" id="comm_edit" name="comm_edit" value={{comment.text}}><br>
-    <label for="comm_edit">Комментарий</label><br>
-    <button type="submit" name="comm_bttn" value=True>Применить исправления</button>
-</form>
-{% else %}
-{{ comment.text }}
-<br><br>
-<h5> Действия с комментарием:</h5>
-{% if comment.user == user %}
-<form method="post">
-    {% csrf_token %}
-    <button name="edit" value="yes">Редактировать</button>
-</form>
-{% else %}
-{% if not comment.acception and del_confirmation != "request"%}
-<form method="post">
-    {% csrf_token %}
-    <input type="radio" id="accept_id" name="acception" value="accept">
-    <label for="accept_id">Принять</label><br>
-    <input type="radio" id="delete_id" name="acception" value="delete">
-    <label for="delete_id">Отклонить (удалить)</label><br>
-    <button type="submit">Применить</button>
-</form>
-{% endif %}
-{% if del_confirmation == "request" %}
-<form method="post">
-    {% csrf_token %}
-    <button name="confirm" value="delete_confirmed">Подтвердить удаление</button>
-    <button name="confirm" value="delete_cancel">Отмена</button>
-</form>
-{% endif %}
-{% endif %}
-{% endif %}
-
+<div class="container bg-secondary text-white">
+    <br>
+    <br>
+    <h4 class="bg-dark">Статья: {{ comment.post.title }}</h4>
+    {{ comment.post.text }}
+    <hr>
+    <h5>Комментарий пользователя {{ comment.user }}:</h5>
+    {% if edit == 'yes' %}
+    <form method="post">
+        {% csrf_token %}
+        <textarea id="comm_edit" name="comm_edit" rows="5" cols="70">{{ comment.text }}</textarea>
+        <label for="comm_edit"> Комментарий </label> <br>
+        <button type="submit" name="comm_bttn" value=True>Применить исправления</button>
+    </form>
+    {% else %}
+    {{ comment.text }}
+    <br><br>
+    <h5> Действия с комментарием:</h5>
+    {% if comment.user == user %}
+    <form method="post">
+        {% csrf_token %}
+        <button class="btn btn-sm btn-warning" style="margin: 20px 0px" name="edit" value="yes">Редактировать</button>
+    </form>
+    {% else %}
+    {% if not comment.acception and del_confirmation != "request"%}
+    <form method="post">
+        {% csrf_token %}
+        <input type="radio" id="accept_id" name="acception" value="accept">
+        <label for="accept_id">Принять</label><br>
+        <input type="radio" id="delete_id" name="acception" value="delete">
+        <label for="delete_id">Отклонить (удалить)</label><br>
+        <button type="submit">Применить</button>
+    </form>
+    {% endif %}
+    {% if del_confirmation == "request" %}
+    <form method="post">
+        {% csrf_token %}
+        <button name="confirm" value="delete_confirmed">Подтвердить удаление</button>
+        <button name="confirm" value="delete_cancel">Отмена</button>
+    </form>
+    {% endif %}
+    {% endif %}
+    {% endif %}
+</div>
 {% endblock content %}
